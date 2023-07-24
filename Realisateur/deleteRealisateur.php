@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Index</title>
+        <title>Realisateur</title>
         <link rel="stylesheet" href="../bootstrap/dist/css/bootstrap.min.css"> 
     </head>
     <body>
@@ -14,20 +14,19 @@
             
             include_once('../baseDeDonnee.php');
 
-            function insertData($dbName,$userName,$password){
-                if (isset($_POST['genre'])) {
-                    $genre = $_POST['genre'];
-                }
+            function deleteData($dbName,$userName,$password){
+                $toDeleteId = [
+                    'id' => $_GET['id']
+                ];
                 //Instanciation de la class BaseDeDonnee
                 $bdd = new BaseDeDonnee($dbName,$userName,$password);
                 try{
                     //Connexion à la base de donnée
                     $conn=$bdd->connexion();
                     //Requete preparée pour inserer dans la table
-                    $sql =$conn->prepare("INSERT INTO genre(nom) VALUES(:genre)"); 
-                    $sql->bindParam(':genre', $genre);
-                    $sql->execute();
-                    echo "Nouvelle genre ajouter à la base de donnée";
+                    $sql =$conn->prepare("DELETE FROM realisateur WHERE realisateur_id=:id"); 
+                    $sql->execute($toDeleteId);
+                    echo "Effacer avec succée";
                 }
                 catch(PDOException $e) {
                     echo "ERREUR <br>" . $e->getMessage();
@@ -36,8 +35,8 @@
                 $bdd->deconnexion();
             }
 
-            insertData($dbName,$userName,$password);
-            header("Location:selectGenre.php");
+            deleteData($dbName,$userName,$password);
+            header("Location:selectRealisateur.php");
         ?>
     </body>
 </html>

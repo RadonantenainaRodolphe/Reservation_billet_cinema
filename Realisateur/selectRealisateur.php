@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Index</title>
+        <title>Réalisateur</title>
         <link rel="stylesheet" href="../bootstrap/dist/css/bootstrap.min.css"> 
     </head>
     <body>
@@ -19,14 +19,7 @@
                 try{
                     //Connexion à la base de donnée
                     $conn=$bdd->connexion();
-                    /*
-                    //Requete preparée pour inserer dans la table
-                    $sql =$conn->prepare("SELECT * FROM genre"); 
-                    $sql->execute();
-                    $resultat = $sql->setFetchMode(PDO::FETCH_ASSOC);
-                    return $resultat;
-                    */
-                    $sql = "SELECT * FROM genre";
+                    $sql = "SELECT * FROM realisateur";
                     $result = $conn->query($sql);
                     $data = $result->fetchAll(PDO::FETCH_ASSOC);
                     return $data;
@@ -41,6 +34,7 @@
             function displayData($tab){
                 foreach($tab as $values){
                     echo($values['nom'] . "\n");
+                    echo($values['prenom']);
                 }
             }
             $res = getDataFromDb($dbName,$userName,$password);
@@ -49,22 +43,24 @@
         ?>
 
         <div class="container">
-            <button type="submit" class="btn btn-success"><a href="genreForm.php">Ajouter</a></button>
+            <button type="submit" class="btn btn-success"><a href="realisateurForm.php">Ajouter</a></button>
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Nom</th>
+                        <th>Prénom</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php 
                         foreach ($res as $value) {
-                            $url_update = "modifyGenre.php?id={$value['genre_id']}";
-                            $url_delete = "deleteGenre.php?id={$value['genre_id']}";
+                            $url_update = "modifyRealisateur.php?id={$value['realisateur_id']}";
+                            $url_delete = "deleteRealisateur.php?id={$value['realisateur_id']}";
                             echo("<tr>");
-                            echo("<td>" . $value['genre_id'] . "</td>");
+                            echo("<td>" . $value['realisateur_id'] . "</td>");
                             echo("<td>" . $value['nom'] . "</td>");
+                            echo("<td>" . $value['prenom'] . "</td>");
                             echo('<td><button class="btn btn-info"><a href=' . $url_update  . '>Changer</a></button></td>');
                             echo('<td><button type="submit" class="btn btn-danger"><a href=' . $url_delete  . '>Effacer</a></button></td>');
                             echo("</tr>");

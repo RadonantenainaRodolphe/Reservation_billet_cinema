@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Index</title>
+        <title>Realisateur</title>
         <link rel="stylesheet" href="../bootstrap/dist/css/bootstrap.min.css"> 
     </head>
     <body>
@@ -15,8 +15,11 @@
             include_once('../baseDeDonnee.php');
 
             function insertData($dbName,$userName,$password){
-                if (isset($_POST['genre'])) {
-                    $genre = $_POST['genre'];
+                if (isset($_POST['nom'])) {
+                    $nom = $_POST['nom'];
+                }
+                if (isset($_POST['prenom'])) {
+                    $prenom = $_POST['prenom'];
                 }
                 //Instanciation de la class BaseDeDonnee
                 $bdd = new BaseDeDonnee($dbName,$userName,$password);
@@ -24,8 +27,9 @@
                     //Connexion à la base de donnée
                     $conn=$bdd->connexion();
                     //Requete preparée pour inserer dans la table
-                    $sql =$conn->prepare("INSERT INTO genre(nom) VALUES(:genre)"); 
-                    $sql->bindParam(':genre', $genre);
+                    $sql =$conn->prepare("INSERT INTO realisateur(nom,prenom) VALUES(:nom,:prenom)"); 
+                    $sql->bindParam(':nom', $nom);
+                    $sql->bindParam(':prenom', $prenom);
                     $sql->execute();
                     echo "Nouvelle genre ajouter à la base de donnée";
                 }
@@ -37,7 +41,7 @@
             }
 
             insertData($dbName,$userName,$password);
-            header("Location:selectGenre.php");
+            header("Location:selectRealisateur.php");
         ?>
     </body>
 </html>
