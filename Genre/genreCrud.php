@@ -11,10 +11,8 @@
             $dbName = "reservation";
             $userName = "root";
             $password = "";
-
-           
-
-            include_once('baseDeDonnee.php');
+            
+            include_once('../baseDeDonnee.php');
 
             function insererElement($dbName,$userName,$password){
                 if (isset($_POST['genre'])) {

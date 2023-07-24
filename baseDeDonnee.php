@@ -12,19 +12,6 @@ class BaseDeDonnee{
 		$this->password = $password;
 	}
 
-    /*
-	public function connect(){
-		$dsn = "mysql:host=" . $this->servername .";dbname=" . $this->dbName;
-		$conn = new PDO($dsn,$this->username,$this->password);
-		$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		return $conn;
-	}
-
-	public function deconnect(){
-		$conn=$this->connect();
-		$conn = null;
-	}
-*/
     public function connexion(){
 		try{
 			$conn = new PDO("mysql:host=$this->servername;dbname=$this->dbName", $this->username, $this->password);

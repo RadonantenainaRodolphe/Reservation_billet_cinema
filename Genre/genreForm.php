@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Index</title>
-        <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css"> 
+        <link rel="stylesheet" href="../bootstrap/dist/css/bootstrap.min.css"> 
     </head>
     <body>
         <form action="genreCrud.php" method="POST">

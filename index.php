@@ -7,12 +7,13 @@
     </head>
     <body>
         <h1>Reservation</h1>
-        <a href="genreForm.php">Genre</a>
+        <a href="Genre/genreForm.php">Genre</a>
         <?php
             $connection = mysql_connect('localhost','root','') or die('impossible de se connecter !');
             mysql_select_db('reservation') or die('impossible de selectionner la base de données');
-            $query = 'INSERT INTO genre(genre_id,nom) VALUES(2,"erotique")';
+            /*$query = 'INSERT INTO genre(genre_id,nom) VALUES(2,"erotique")';
             mysql_query($query);
+            */
             mysql_close($connection);
         ?>
     </body>
