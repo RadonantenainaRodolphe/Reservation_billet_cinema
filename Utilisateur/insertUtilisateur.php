@@ -1,3 +1,6 @@
+<?php 
+    session_start();
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -50,7 +53,8 @@
             }
 
             insertData($dbName,$userName,$password);
-            header("Location:selectUtilisateur.php");
+            $_SESSION['name'] = $_POST['nom'];
+            header("Location:../index.php");
         ?>
     </body>
 </html>
