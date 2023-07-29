@@ -8,7 +8,7 @@
 
     if(isset($_POST['login'])){
         $name = $_POST['name'];
-        $pass = $_POST['pass'];
+        $pass = hash("sha256",$_POST['pass']);
         $bdd = new BaseDeDonnee($dbName,$userName,$password);
         //Connexion à la base de donnée
         $conn=$bdd->connexion();

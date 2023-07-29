@@ -28,7 +28,8 @@
                     $telephone = $_POST['telephone'];
                 }
                 if (isset($_POST['motDePasse'])) {
-                    $motDePasse = $_POST['motDePasse'];
+                    //Pour plus de securite il faut hasher le mot de passe
+                    $motDePasse = hash("sha256",$_POST['motDePasse']);
                 }
                 //Instanciation de la class BaseDeDonnee
                 $bdd = new BaseDeDonnee($dbName,$userName,$password);
