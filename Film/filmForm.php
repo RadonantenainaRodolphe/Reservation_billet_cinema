@@ -71,7 +71,7 @@
             $actors = getActor($dbName,$userName,$password);
 
         ?>
-        <form action="insertFilm.php" method="POST" encrypt="multipart/form-data"> 
+        <form action="insertFilm.php" method="POST" enctype="multipart/form-data"> 
             <h1>Film</h1>
             <div class="form-group">
                 <input class="form-control" name="titre" id="titre" placeholder="Entrer le titre du film ...">
@@ -80,7 +80,7 @@
                 <textarea class="form-control" name="description" id="description" placeholder="Entrer le description du film ..."></textarea>
             </div>
             <div class="form-group">
-                <input type="file" class="form-control" name="affiche" id="affiche">
+                <input type="file" class="form-control" name="affiche">
             </div>
             <!--
             <div class="input-group">

@@ -11,7 +11,7 @@
             $dbName = "reservation";
             $userName = "root";
             $password = "";
-            
+
             include_once('../baseDeDonnee.php');
 
             function insertData($dbName,$userName,$password){
@@ -30,19 +30,36 @@
                 if (isset($_POST['realisateur'])) {
                     $realisateur = $_POST['realisateur'];
                 }
+
+                /*
+                if (isset($_POST['affiche'])) {
+                    $destination = "Image_uploaded/".basename($_FILES['affiche']['name']);
+
+                    $affiche = $_FILES['affiche']['name'];
+                }
+                */
+                $destination = "Image_uploaded/".basename($_FILES['affiche']['name']);
+                $affiche = $_FILES['affiche']['name'];
+
                 //Instanciation de la class BaseDeDonnee
                 $bdd = new BaseDeDonnee($dbName,$userName,$password);
                 try{
                     //Connexion à la base de donnée
                     $conn=$bdd->connexion();
                     //Requete preparée pour inserer dans la table
-                    $sql =$conn->prepare("INSERT INTO films(titre,description,genre_id,acteur_id,realisateur_id) VALUES(:titre,:description,:genre,:acteur,:realisateur)"); 
+                    $sql =$conn->prepare("INSERT INTO films(titre,description,affiche,genre_id,acteur_id,realisateur_id) VALUES(:titre,:description,:affiche,:genre,:acteur,:realisateur)"); 
                     $sql->bindParam(':titre', $titre);
                     $sql->bindParam(':description', $description);
+                    $sql->bindParam(':affiche', $affiche);
                     $sql->bindParam(':genre', $genre);
                     $sql->bindParam(':acteur', $acteur);
                     $sql->bindParam(':realisateur', $realisateur);
                     $sql->execute();
+                    if(move_uploaded_file($_FILES['affiche']['tmp_name'], $destination)){
+                        echo("Image bien enregistrer");
+                    } else {
+                        echo("Il y a un probleme lors de l'enregistrement de l'image");
+                    }
                     echo "Nouvelle genre ajouter à la base de donnée";
                 }
                 catch(PDOException $e) {

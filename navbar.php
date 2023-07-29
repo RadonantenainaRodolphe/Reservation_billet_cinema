@@ -1,5 +1,5 @@
 
-<nav class="navbar" style="background-color: #e3f2fd;">
+<nav class="navbar fixed-top" style="background-color: #e3f2fd;">
     <div class="container-fluid">
         <a href="index.php" class="navbar-brand">ReserVeo</a>
         <form class="d-flex">
