@@ -20,7 +20,7 @@
                     //Connexion à la base de donnée
                     $conn=$bdd->connexion();
                     //$sql = "SELECT * FROM films";
-                    $sql = "SELECT f.film_id,f.titre,f.description,a.prenom AS nom_acteur, r.prenom AS nom_realisateur, g.nom AS nom_genre FROM films f LEFT JOIN acteur a ON f.acteur_id = a.acteur_id LEFT JOIN realisateur r ON f.realisateur_id = r.realisateur_id LEFT JOIN genre g ON f.genre_id = g.genre_id";
+                    $sql = "SELECT f.film_id,f.titre,f.description,f.affiche AS affiche,a.prenom AS nom_acteur, r.prenom AS nom_realisateur, g.nom AS nom_genre FROM films f LEFT JOIN acteur a ON f.acteur_id = a.acteur_id LEFT JOIN realisateur r ON f.realisateur_id = r.realisateur_id LEFT JOIN genre g ON f.genre_id = g.genre_id";
                     $result = $conn->query($sql);
                     $data = $result->fetchAll(PDO::FETCH_ASSOC);
                    // $genre = $conn->query("SELECT ")
@@ -46,6 +46,7 @@
                         <th>ID</th>
                         <th>Titre</th>
                         <th>Description</th>
+                        <th>Affiche</th>
                         <th>Genre</th>
                         <th>Acteur</th>
                         <th>Realisateur</th>
@@ -61,6 +62,7 @@
                             echo("<td>" . $value['film_id'] . "</td>");
                             echo("<td>" . $value['titre'] . "</td>");
                             echo("<td>" . $value['description'] . "</td>");
+                            echo("<td><img src='../Img/". $value['affiche'] . "' style='width:100px;height:100px'/></td>");
                             echo("<td>" . $value['nom_genre'] . "</td>");
                             echo("<td>" . $value['nom_acteur'] . "</td>");
                             echo("<td>" . $value['nom_realisateur'] . "</td>");

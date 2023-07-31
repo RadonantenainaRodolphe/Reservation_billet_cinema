@@ -80,7 +80,7 @@
                 <textarea class="form-control" name="description" id="description" placeholder="Entrer le description du film ..."></textarea>
             </div>
             <div class="form-group">
-                <input type="file" class="form-control" name="affiche">
+                <input type="file" class="form-control" name="image">
             </div>
             <!--
             <div class="input-group">

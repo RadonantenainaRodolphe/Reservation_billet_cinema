@@ -24,7 +24,7 @@
         }
         else {
            header("Location:loginForm.php");
-           echo("Votre nom ou mot de n'est pas valide !");
+           echo("Votre nom ou mot de passe n'est pas valide !");
         }
     }
 ?>

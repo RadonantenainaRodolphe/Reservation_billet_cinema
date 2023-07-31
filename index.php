@@ -13,7 +13,7 @@
             //Connexion à la base de donnée
             $conn=$bdd->connexion();
             //$sql = "SELECT * FROM films";
-            $sql = "SELECT s.seance_id,s.date,s.heure,s.prix,s.place_restantes,f.titre AS film,f.description AS description,sa.nom AS salle FROM seances s LEFT JOIN films f ON s.film_id = f.film_id LEFT JOIN salles sa ON s.salle_id = sa.salle_id";
+            $sql = "SELECT s.seance_id,s.date,s.heure,s.prix,s.place_restantes,f.titre AS titre,f.affiche AS affiche,f.description AS description,sa.nom AS salle FROM seances s LEFT JOIN films f ON s.film_id = f.film_id LEFT JOIN salles sa ON s.salle_id = sa.salle_id";
             $result = $conn->query($sql);
             $data = $result->fetchAll(PDO::FETCH_ASSOC);
             // $genre = $conn->query("SELECT ")
@@ -136,29 +136,77 @@
             </a>
         </div>
         -->
-        
-        <h2>Les évènements à venir</h2>
+        <?php
+            if(isset($_GET['message'])){
+                $message = $_GET['message'];
+        ?>
+            <div class="btn btn-success" role="alert">
+                <p><?php echo($message)?></p>
+            </div>
+        <?php } ?>
+        <h2 class="mt-5">Les évènements à venir</h2>
         <div class="d-flex flex-row">
-        <?php foreach ($seances as $seance) {?>
-                <div class="card m-3" style="max-width: 540px;">
+        <?php foreach ($seances as $seance) {
+            if($seance['date'] >= date('Y-m-d')){?>
+                <div class="card mx-3" style="max-width: 540px;">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <img src="Image/image1.jpg" class="img-fluid rounded-start" alt="..." style="height: 100%;">
+                            <img src="Img/<?php echo($seance['affiche'])?>" class="img-fluid rounded-start" alt="..." style="height: 100%;">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title">Titre : <?php echo($seance['film']) ?></h5>
+                                <h5 class="card-title">Titre : <?php echo($seance['titre']) ?></h5>
                                 <p class="card-text">Description : <?php echo($seance['description']) ?></p>
                                 <p class="card-text">Salle de projection : <?php echo($seance['salle']) ?></p>
-                                <p class="card-text">Prix : <?php echo($seance['prix']) ?>Ariary</p>
-                                <p class="card-text">Place restant : <?php echo($seance['place_restantes']) ?></p>
+                                <p class="card-text">Prix : <?php echo($seance['prix']) ?>Ariary</p> 
+                                    <?php
+                                        if ($seance['place_restantes']<1){
+                                            echo("<p>Rupture de stock</p>");
+                                        }
+                                        else { 
+                                            echo("<p class='card-text'>Place restant : " . $seance['place_restantes']);
+                                        }
+                                    ?>
+                                </p>
                                 <p class="card-text">Date :<?php echo($seance['date']) ?> à <small class="text-body-secondary"><?php echo($seance['heure']) ?></small></p>
-                                <button class="btn btn-success"><a href="FilmDetails.php">Détail</a></button> 
+                                <button class="btn btn-success"><a class="navbar-text" href="Seance/seanceDetails.php?id=<?php echo($seance['seance_id']) ?>">Détail</a></button> 
                             </div>
                         </div>
                     </div>
                 </div>
-        <?php } ?>
+        <?php }} ?>
+        </div>
+        <h2 class="mt-5">Les évènements déjà passé</h2>
+        <div class="d-flex flex-row">
+        <?php foreach ($seances as $seance) {
+            if($seance['date'] < date('Y-m-d')){?>
+                <div class="card mx-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="Img/<?php echo($seance['affiche'])?>" class="img-fluid rounded-start" alt="..." style="height: 100%;">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title font-weight-bold">Titre : <?php echo($seance['titre']) ?></h5>
+                                <p class="card-text">Description : <?php echo($seance['description']) ?></p>
+                                <p class="card-text">Salle de projection : <?php echo($seance['salle']) ?></p>
+                                <p class="card-text">Prix : <?php echo($seance['prix']) ?>Ariary</p> 
+                                    <?php
+                                        if ($seance['place_restantes']<1){
+                                            echo("<p>Rupture de stock</p>");
+                                        }
+                                        else { 
+                                            echo("<p class='card-text'>Place restant : " . $seance['place_restantes']);
+                                        }
+                                    ?>
+                                </p>
+                                <p class="card-text">Date :<?php echo($seance['date']) ?> à <small class="text-body-secondary"><?php echo($seance['heure']) ?></small></p>
+                                <button class="btn btn-success"><a class="navbar-text" href="Seance/seanceDetails.php?id=<?php echo($seance['seance_id']) ?>">Détail</a></button> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        <?php }} ?>
         </div>
         <script src="bootstrap/dist/jquery/jquery.min.js"></script>
         <script src="bootstrap/dist/tether/tether.min.js"></script>

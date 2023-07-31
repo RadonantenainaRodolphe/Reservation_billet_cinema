@@ -8,6 +8,7 @@
         
     </head>
     <body>
+        <?php include_once("../navbar.php");?>
         <div class="pt-5">
             <div class="global-container">
                 <div class="card login-form">

@@ -38,8 +38,26 @@
                     $affiche = $_FILES['affiche']['name'];
                 }
                 */
-                $destination = "Image_uploaded/".basename($_FILES['affiche']['name']);
-                $affiche = $_FILES['affiche']['name'];
+                if($_FILES["image"]["error"] === 4){
+                    echo("<script>alert('Image n\'existe pas');</script>");
+                } else {
+                    $fileName = $_FILES['image']['name'];
+                    $fileSize = $_FILES['image']['size'];
+                    $tmpName = $_FILES['image']['tmp_name'];
+        
+                    $validExtenstion = ["jpg","jpeg","png"];
+                    $fileExtension = explode(".",$fileName);
+                    $fileExtension = strtolower(end($fileExtension));
+                    if(!in_array($fileExtension, $validExtenstion)){
+                        echo("<script>alert('L\'extension n\'est pas valide');</script>");
+                    } else if($fileSize > 2000000){
+                        echo("<script>alert('Le fichier est trés volumineux');</script>");
+                    } else{
+                        $newFileName = uniqid();
+                        $newFileName .= '.'.$fileExtension;
+                        move_uploaded_file($tmpName, '../Img/'.$newFileName);
+                    }
+                }
 
                 //Instanciation de la class BaseDeDonnee
                 $bdd = new BaseDeDonnee($dbName,$userName,$password);
@@ -50,16 +68,11 @@
                     $sql =$conn->prepare("INSERT INTO films(titre,description,affiche,genre_id,acteur_id,realisateur_id) VALUES(:titre,:description,:affiche,:genre,:acteur,:realisateur)"); 
                     $sql->bindParam(':titre', $titre);
                     $sql->bindParam(':description', $description);
-                    $sql->bindParam(':affiche', $affiche);
+                    $sql->bindParam(':affiche', $newFileName);
                     $sql->bindParam(':genre', $genre);
                     $sql->bindParam(':acteur', $acteur);
                     $sql->bindParam(':realisateur', $realisateur);
                     $sql->execute();
-                    if(move_uploaded_file($_FILES['affiche']['tmp_name'], $destination)){
-                        echo("Image bien enregistrer");
-                    } else {
-                        echo("Il y a un probleme lors de l'enregistrement de l'image");
-                    }
                     echo "Nouvelle genre ajouter à la base de donnée";
                 }
                 catch(PDOException $e) {
